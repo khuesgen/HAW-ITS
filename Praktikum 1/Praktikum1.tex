@@ -14,6 +14,7 @@
 \usepackage[pdftex]{hyperref}
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{xcolor}
 
 % Hier anpassen
 \newcommand{\veranstaltung}{IT-Sicherheit} %Name der Veranstaltung
@@ -37,6 +38,10 @@
 		Kevin Hüsgen
 		\ifthenelse{\equal{\praktikumspartner}{}}{}{\& \praktikumspartner}}
 
+\lstset{
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+}
 
 \begin{document}
 	
@@ -116,5 +121,23 @@ $sql->execute();
 \end{lstlisting}
 
 \includegraphics[scale=0.7]{sqli_fixed.png}
-
+\section{Passwort - Cracking}
+\subsection{Drei unterschiedliche Passwörter - Länge 3}
+Passwort1: 1a2 $\rightarrow$ Zeit: 7 Sekunden \\
+Passwort2: ggj $\rightarrow$ Zeit: 20 Sekunden \\
+Passwort3: 123 $\rightarrow$ Zeit: <0.1 Sekunden (Sofort) \\
+Grund für die Zeitunterschiede: \\
+Manche Passwörter sind in einer Passwortliste gespeichert, welche iterativ von oben nach unten durchprobiert wird. Falls kein Passwort passt wird 
+das Passwort gebruteforced. \\ 
+\subsection{Passwort mit 8 Ziffern}
+Passwort mit 8 Ziffern: 96526738 \\
+\begin{lstlisting}[language=bash]
+ ./makepasswd 96526738 > digits.txt
+ john -i=digits digits.txt
+ \end{lstlisting}
+Zeit für das Cracken: 7 Sekunden 
+\subsection{Passwort < 10 Sekunden - Länge 6}
+Passwort: abcdef $\rightarrow$ Zeit: <0.1 Sekunden (Sofort)
 \end{document}
+\subsection{Komplexes Passwort - Länge 8}
+Passwort: XUXa71Aj $\rightarrow$ Zeit: <0.1 Sekunden (Sofort)
